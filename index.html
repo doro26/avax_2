@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My DApp</title>
+    <title>Freelance Marketplace DApp</title>
     <!-- Include ethers.js from a CDN -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.0/dist/ethers.umd.min.js"></script>
     <!-- Include the CSS file -->
@@ -12,32 +12,39 @@
 <body>
     <div class="container">
         <header>
-            <h1>Welcome to My DApp</h1>
+            <h1>Freelance Marketplace</h1>
         </header>
         <main>
             <button id="connectWalletButton" class="btn">Connect Wallet</button>
+            
             <section class="form-section">
-                <h2>Create Account</h2>
-                <button id="createAccountButton" class="btn">Create Account</button>
-            </section>
-            <section class="form-section">
-                <h2>Deposit Funds</h2>
-                <form id="depositForm" class="form">
-                    <input type="text" id="depositAmount" placeholder="Amount in ETH" required class="input" />
-                    <button type="submit" class="btn">Deposit</button>
+                <h2>Create Freelancer Profile</h2>
+                <form id="freelancerProfileForm" class="form">
+                    <input type="text" id="freelancerName" placeholder="Name" required class="input" />
+                    <textarea id="freelancerSkills" placeholder="Skills (e.g., Web Development, Graphic Design)" required class="textarea"></textarea>
+                    <input type="text" id="freelancerRate" placeholder="Rate per hour (ETH)" required class="input" />
+                    <button type="submit" class="btn">Create Profile</button>
                 </form>
             </section>
+
             <section class="form-section">
-                <h2>Withdraw Funds</h2>
-                <form id="withdrawForm" class="form">
-                    <input type="text" id="withdrawAmount" placeholder="Amount in ETH" required class="input" />
-                    <button type="submit" class="btn">Withdraw</button>
+                <h2>Create Job Listing</h2>
+                <form id="jobListingForm" class="form">
+                    <input type="text" id="jobTitle" placeholder="Job Title" required class="input" />
+                    <textarea id="jobDescription" placeholder="Job Description" required class="textarea"></textarea>
+                    <input type="text" id="jobBudget" placeholder="Budget (ETH)" required class="input" />
+                    <button type="submit" class="btn">Create Job Listing</button>
                 </form>
             </section>
+            
             <section class="form-section">
-                <h2>Check Balance</h2>
-                <button id="getBalanceButton" class="btn">Get Balance</button>
-                <div id="balanceDisplay" class="balance-display"></div>
+                <h2>Available Jobs</h2>
+                <ul id="jobList" class="post-list"></ul>
+            </section>
+
+            <section class="form-section">
+                <h2>My Proposals</h2>
+                <ul id="proposalList" class="post-list"></ul>
             </section>
         </main>
     </div>
