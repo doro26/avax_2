@@ -3,113 +3,85 @@ let signer;
 let contract;
 
 // Replace with your contract address and ABI
-const contractAddress = '0x10076B9B4b60933f793f6F11e06632FA010FE629'; // Update with your actual contract address
+const contractAddress = '0xabEDBFB99caf46c7F208Bbc3c06d793715763dd8'; // Update with your actual contract address
 
 const contractABI = [
     {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    },
-    {
-        "anonymous": false,
         "inputs": [
             {
-                "indexed": true,
-                "internalType": "address",
-                "name": "accountHolder",
-                "type": "address"
-            }
-        ],
-        "name": "AccountCreated",
-        "type": "event"
-    },
-    {
-        "inputs": [],
-        "name": "createAccount",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "deposit",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "accountHolder",
-                "type": "address"
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
             },
             {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "Deposit",
-        "type": "event"
-    },
-    {
-        "inputs": [
+                "internalType": "string",
+                "name": "skills",
+                "type": "string"
+            },
             {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
+                "internalType": "string",
+                "name": "rate",
+                "type": "string"
             }
         ],
-        "name": "withdraw",
+        "name": "createFreelancerProfile",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "anonymous": false,
         "inputs": [
             {
-                "indexed": true,
-                "internalType": "address",
-                "name": "accountHolder",
-                "type": "address"
+                "internalType": "string",
+                "name": "title",
+                "type": "string"
             },
             {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "Withdrawal",
-        "type": "event"
-    },
-    {
-        "inputs": [],
-        "name": "getBalance",
-        "outputs": [
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+            },
             {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
+                "internalType": "string",
+                "name": "budget",
+                "type": "string"
             }
         ],
-        "stateMutability": "view",
+        "name": "createJobListing",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "inputs": [],
-        "name": "owner",
+        "name": "getJobListings",
         "outputs": [
             {
-                "internalType": "address",
+                "components": [
+                    {
+                        "internalType": "address",
+                        "name": "client",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "title",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "budget",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct FreelanceMarketplace.Job[]",
                 "name": "",
-                "type": "address"
+                "type": "tuple[]"
             }
         ],
         "stateMutability": "view",
@@ -145,92 +117,82 @@ async function connectWallet() {
 // Add event listener to connect wallet button
 document.getElementById('connectWalletButton').addEventListener('click', connectWallet);
 
-// Function to create an account
-async function createAccount() {
-    if (!contract) {
-        alert('Connect your wallet first to create an account.');
-        return;
-    }
-
-    try {
-        await contract.createAccount();
-        alert('Account created successfully!');
-    } catch (error) {
-        if (error.data && error.data.message.includes("Account already exists")) {
-            alert('Account already exists.');
-        } else {
-            console.error('Error creating account:', error);
-            alert('Error creating account. Check console for details.');
-        }
-    }
-}
-
-// Function to deposit funds
-async function depositFunds(event) {
+// Function to create freelancer profile
+async function createFreelancerProfile(event) {
     event.preventDefault();
 
     if (!contract) {
-        alert('Connect your wallet first to deposit funds.');
+        alert('Connect your wallet first to create a freelancer profile.');
         return;
     }
 
-    const amount = document.getElementById('depositAmount').value;
-    const etherAmount = ethers.utils.parseEther(amount);
+    const name = document.getElementById('freelancerName').value;
+    const skills = document.getElementById('freelancerSkills').value;
+    const rate = document.getElementById('freelancerRate').value;
 
     try {
-        await contract.deposit({ value: etherAmount });
-        alert('Funds deposited successfully!');
+        await contract.createFreelancerProfile(name, skills, rate);
+        alert('Freelancer profile created successfully!');
     } catch (error) {
-        console.error('Error depositing funds:', error);
-        alert('Error depositing funds. Check console for details.');
+        console.error('Error creating freelancer profile:', error);
+        alert('Error creating freelancer profile. Check console for details.');
     }
 }
 
-// Function to withdraw funds
-async function withdrawFunds(event) {
+// Function to create job listing
+async function createJobListing(event) {
     event.preventDefault();
 
     if (!contract) {
-        alert('Connect your wallet first to withdraw funds.');
+        alert('Connect your wallet first to create a job listing.');
         return;
     }
 
-    const amount = document.getElementById('withdrawAmount').value;
-    const etherAmount = ethers.utils.parseEther(amount);
+    const title = document.getElementById('jobTitle').value;
+    const description = document.getElementById('jobDescription').value;
+    const budget = document.getElementById('jobBudget').value;
 
     try {
-        await contract.withdraw(etherAmount);
-        alert('Funds withdrawn successfully!');
+        await contract.createJobListing(title, description, budget);
+        alert('Job listing created successfully!');
+        // Refresh job list after creating a job listing
+        getJobListings();
     } catch (error) {
-        console.error('Error withdrawing funds:', error);
-        alert('Error withdrawing funds. Check console for details.');
+        console.error('Error creating job listing:', error);
+        alert('Error creating job listing. Check console for details.');
     }
 }
 
-// Function to get the balance
-async function getBalance() {
+// Function to get all job listings
+async function getJobListings() {
     try {
         if (!contract) {
-            alert('Connect your wallet first to fetch balance.');
+            alert('Connect your wallet first to fetch job listings.');
             return;
         }
 
-        const balance = await contract.getBalance();
-        const etherBalance = ethers.utils.formatEther(balance);
-        document.getElementById('balanceDisplay').innerText = `Balance: ${etherBalance} ETH`;
+        const jobs = await contract.getJobListings();
+        // Clear previous job listings
+        const jobList = document.getElementById('jobList');
+        jobList.innerHTML = '';
+
+        // Display each job listing
+        jobs.forEach(job => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `<strong>${job.client}</strong> - <em>${job.title}</em>: ${job.description} (Budget: ${job.budget} ETH)`;
+            jobList.appendChild(listItem);
+        });
     } catch (error) {
-        console.error('Error getting balance:', error);
-        alert('Error getting balance. Check console for details.');
+        console.error('Error getting job listings:', error);
+        alert('Error getting job listings. Check console for details.');
     }
 }
 
-// Add event listeners to forms and buttons
-document.getElementById('createAccountButton').addEventListener('click', createAccount);
-document.getElementById('depositForm').addEventListener('submit', depositFunds);
-document.getElementById('withdrawForm').addEventListener('submit', withdrawFunds);
-document.getElementById('getBalanceButton').addEventListener('click', getBalance);
+// Add event listeners to forms
+document.getElementById('freelancerProfileForm').addEventListener('submit', createFreelancerProfile);
+document.getElementById('jobListingForm').addEventListener('submit', createJobListing);
 
-// Automatically load balance when the page is loaded
+// Automatically load job listings when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    getBalance();
+    getJobListings();
 });
