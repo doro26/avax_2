@@ -3,48 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freelance Marketplace DApp</title>
+    <title>Freelance Hub DApp</title>
     <!-- Include ethers.js from a CDN -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.0/dist/ethers.umd.min.js"></script>
-    <!-- Include the CSS file -->
-    <link rel="stylesheet" href="styles.css">
+   
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Freelance Marketplace</h1>
+            <h1>Welcome to Freelance Hub</h1>
         </header>
         <main>
             <button id="connectWalletButton" class="btn">Connect Wallet</button>
-            
+
             <section class="form-section">
-                <h2>Create Freelancer Profile</h2>
-                <form id="freelancerProfileForm" class="form">
-                    <input type="text" id="freelancerName" placeholder="Name" required class="input" />
-                    <textarea id="freelancerSkills" placeholder="Skills (e.g., Web Development, Graphic Design)" required class="textarea"></textarea>
-                    <input type="text" id="freelancerRate" placeholder="Rate per hour (ETH)" required class="input" />
+                <h2>Create Profile</h2>
+                <form id="profileForm" class="form">
+                    <input type="text" id="profileName" placeholder="Name" required class="input" />
+                    <input type="text" id="profileSummary" placeholder="Summary" required class="input" />
                     <button type="submit" class="btn">Create Profile</button>
                 </form>
             </section>
 
             <section class="form-section">
-                <h2>Create Job Listing</h2>
-                <form id="jobListingForm" class="form">
+                <h2>Post Job</h2>
+                <form id="jobForm" class="form">
                     <input type="text" id="jobTitle" placeholder="Job Title" required class="input" />
                     <textarea id="jobDescription" placeholder="Job Description" required class="textarea"></textarea>
-                    <input type="text" id="jobBudget" placeholder="Budget (ETH)" required class="input" />
-                    <button type="submit" class="btn">Create Job Listing</button>
+                    <input type="number" id="jobBudget" placeholder="Max Budget (ETH)" required class="input" />
+                    <button type="submit" class="btn">Post Job</button>
                 </form>
-            </section>
-            
-            <section class="form-section">
-                <h2>Available Jobs</h2>
-                <ul id="jobList" class="post-list"></ul>
             </section>
 
             <section class="form-section">
-                <h2>My Proposals</h2>
-                <ul id="proposalList" class="post-list"></ul>
+                <h2>Submit Proposal</h2>
+                <form id="proposalForm" class="form">
+                    <input type="number" id="proposalJobId" placeholder="Job ID" required class="input" />
+                    <textarea id="proposalDetails" placeholder="Proposal Details" required class="textarea"></textarea>
+                    <input type="number" id="proposalCost" placeholder="Proposed Cost (ETH)" required class="input" />
+                    <button type="submit" class="btn">Submit Proposal</button>
+                </form>
+            </section>
+
+            <section class="form-section">
+                <h2>Active Jobs</h2>
+                <ul id="jobList" class="job-list"></ul>
             </section>
         </main>
     </div>
